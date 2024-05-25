@@ -53,18 +53,16 @@
         <strong class="u-l"> Workspace</strong>
       </section>
       <section class="bottom">
-        <ul class="users">
+        <ul class="users" id="taskList">
           <li class="user">
             <span contenteditable="true" class="task-link">ICS 46 - Project 4</span>
-            
-            <span contenteditable="true" class="task">https://ics.uci.edu/~mikes/</span> <!--a href="https://ics.uci.edu/~mikes/"></a>-->
+            <span contenteditable="true" class="task">https://ics.uci.edu/~mikes/</span>
           </li>
           <li class="user">
             <span contenteditable="true" class="task-link">Significance of Blue Doors Essay</span>
             <span contenteditable="true" class="task">www.historyofbluedoors.com</span>
             <span contenteditable="true" class="task">www.researchlink.com</span>
             <span contenteditable="true" class="task">www.bluedoorsmatter.com</span>
-            
           </li>
           <li class="user">
             <span contenteditable="true" class="task-link">ICS 46 - Project 4</span>
@@ -75,14 +73,53 @@
             <span contenteditable="true" class="task">Journalist</span>
           </li>
         </ul>
+        
+        <button id="addTaskButton">Add Task</button>
+        
       </section>
     </div>
     </div>
 
     </div>
+    <p></p>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const addTaskButton = document.getElementById('addTaskButton');
+      const taskList = document.getElementById('taskList');
+    
+      let index = 1; // Starting index for new tasks
+    
+      addTaskButton.addEventListener('click', function() {
+        // Create new list item
+        const listItem = document.createElement('li');
+        listItem.classList.add('user');
+    
+        // Create task-link span (editable)
+        const taskLinkSpan = document.createElement('span');
+        taskLinkSpan.contentEditable = true;
+        taskLinkSpan.classList.add('task-link');
+        taskLinkSpan.textContent = 'New Task ' + index;
+    
+        // Create task span (editable)
+        const taskSpan = document.createElement('span');
+        taskSpan.contentEditable = true;
+        taskSpan.classList.add('task');
+        taskSpan.textContent = 'www.newtask.com';
+    
+        // Append spans to list item
+        listItem.appendChild(taskLinkSpan);
+        listItem.appendChild(taskSpan);
+    
+        // Append list item to task list
+        taskList.appendChild(listItem);
+    
+        index++; // Increment index for next task
+      });
+    });
+  </script>
 
 
-
+  
     <div class="checklist-container">
       <div id="checklist">
         
@@ -94,7 +131,7 @@
         <label for="03">Coffee</label>
       </div>
     </div>
-    
+
     <button id="addCheckboxButton">Add Checkbox</button>
     <script>
       document.addEventListener('DOMContentLoaded', function() {

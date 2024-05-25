@@ -1,7 +1,10 @@
-function startTimer(duration, display, pause=0) {
+//var intervalID = NULL;
+
+function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
 
     function updateDisplay() {
+
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -18,10 +21,17 @@ function startTimer(duration, display, pause=0) {
         
     }
     
-    if (!pause) {
+    updateDisplay(); // Initial call to update display immediately
+    setInterval(updateDisplay, 1000);
+    /*
+    if (intevalID == NULL) {
         updateDisplay(); // Initial call to update display immediately
-        setInterval(updateDisplay, 1000);
+        intervalID = setInterval(updateDisplay, 1000);
+    } else {
+        clearInterval(intervalID);
+        intervalID = NULL;
     }
+    */
 }
 
 window.onload = function () {
@@ -30,13 +40,17 @@ window.onload = function () {
     var startButton = document.querySelector('#startButton');
 
     startButton.addEventListener('click', function () {
-        if (startButton.textContent = "Restart") {
+        /*if (startButton.textContent != "Pause") {
             startTimer(time, display);
-            startButton.textContent = "Start Timer";
+            startButton.textContent = "Pause";
         } else {
             startTimer(time, display, 1);
-            startButton.textContent = "Restart";
+            startButton.textContent = "Start Timer";
         }
+        */
+        startTimer(time, display);
+        startButton.textContent = "Pause";
+        startButton.disabled = true;
     });
     
 };
@@ -137,7 +151,14 @@ function generateDaySchedule(year, month, day) {
     dayevents = [];
     daytasks = [];
     for(let i = 0; i < events.length(); i++) {
-        
+        if(filter.getDay() == events[i].eventdate.getDay()) {
+            dayevents.push(events[i]);
+        }
+    }
+    for(let i = 0; i < tasks.length(); i++) {
+        if(filter.getDay() == tasks[i].tasksdeadline.getDay()) {
+            daytasks.push(tasks[i]);
+        }
     }
 }
 
