@@ -28,7 +28,20 @@ window.onload = function () {
 
     startButton.addEventListener('click', function () {
         startTimer(time, display);
-        startButton.disabled = true;
+        startButton.textContent = "Pause";
+        /*
+        if (startButton.textContent == "Start Timer") {
+            startButton.textContent = "Pause";
+            startTimer(time, display);
+        } else {
+            startButton.textContent = "Restart Timer";
+            startTimer(1500, display);
+        }
+        */
+        //startButton.disabled = true;
+        
+        
+
     });
     
 };
@@ -43,7 +56,7 @@ function loadSchedule() {
         schedule = JSON.parse();
     }
     else {
-        localStorage.setItem("Schedule", {events: [], tasks: []});
+        localStorage.setItem("Schedule", {"events": [], "tasks": []});
         schedule = [];
     }
     return schedule;
@@ -53,8 +66,8 @@ function loadSchedule() {
 function addEvent(name, time, year, month, day, hours, minutes) {
     schedule = loadSchedule();
     date = new Date(year, month, days, hours, minutes);
-    evnt = {eventdate: date, eventname: name, eventtime: time};
-    schedule.event.push(evnt);
+    evnt = {"eventdate": date, "eventname": name, "eventtime": time};
+    schedule.events.push(evnt);
     localStorage.setItem("Schedule", JSON.stringify(schedule));
 }
 
@@ -62,7 +75,7 @@ function addEvent(name, time, year, month, day, hours, minutes) {
 function addTask(name, time, year, month, day, hours, minutes) {
     schedule = loadSchedule();
     date = new Date(year, month, days, hours, minutes);
-    task = {taskname: name, tasktime: time, taskdeadline: deadline, taskcompleted: "false"};
+    task = {"taskname": name, "tasktime": time, "taskdeadline": deadline, "taskcompleted": "false"};
     schedule.tasks.push(task);
     localStorage.setItem("Schedule", JSON.stringify(schedule));
 }
@@ -72,17 +85,31 @@ function removeEvent(name, year, month, day, hours, minutes) {
     schedule = loadSchedule();
     events = schedule.events;
     date = new Date(year, month, day, hours, minutes);
-    for(let i = 0; i < events; i++) {
+    for(let i = 0; i < events.length(); i++) {
         evnt = schedule.events[i];
         if(evnt.eventname == name && evnt.eventdate == date) {
-            
+            events.splice(i, 1);
+            break;
         }
     }
+    schedule.events = events;
+    localStorage.setItem("Schedule", JSON.stringify(schedule));
 }
 
 //removes task from local storage schedule object
-function removeTask(name) {
-    //TODO
+function removeTask(name, year, month, day, hours, minutes) {
+    schedule = loadSchedule();
+    tasks = schedule.tasks;
+    date = new Date(year, month, day, hours, minutes);
+    for(let i = 0; i < tasks.length(); i++) {
+        task = schedule.tasks[i];
+        if(evnt.eventname == name && evnt.eventdate == date) {
+            tasks.splice(i, 1);
+            break;
+        }
+    }
+    schedule.tasks = tasks;
+    localStorage.setItem("Schedule", JSON.stringify(schedule));
 }
 
 
@@ -104,6 +131,11 @@ function allIncompleteTasks() {
         }
     }
     return incompletetasks;
+}
+
+
+function generateDaySchedule(year, month, day) {
+    //TODO
 }
 
 
@@ -150,35 +182,75 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
+const completedCounter = document.getElementById("completed-counter");
+const uncompletedCounter = document.getElementById("uncompleted-counter");
 
+function updateCounters() {
+  const completedTasks = document.querySelectorAll(".completed").length;
+  const uncompletedTasks = document.querySelectorAll("li:not(.completed)").length;
 
-const li = document.createElement("li");
-
-function insertTask() {
-    const task = inputBox.value.trim();
-    li.innerHTML = `
-        <label>
-            <input type="checkbox">
-            <span>${task}</span>
-        </label>
-        <span class="edit-btn">Edit</span>
-        <span class="delete-btn">Delete</span>
-        `;
-
-    listContainer.append(li);
-    inputBox.value = "";
+  completedCounter.textContent = completedTasks;
+  uncompletedCounter.textContent = uncompletedTasks;
 }
 
-const checkbox = li.querySelector("input");
-const editBtn = li.querySelector(".edit-btn");
-const taskSpan = li.querySelector("span");
-const deleteBtn = li.querySelector(".delete-btn");
+function insertTask() {
+  const task = inputBox.value.trim();
+  if (!task) {
+    alert("Please write down a task");
+    console.log("no task added");
 
-checkbox.addEventListener("click", function () {
+    return;
+  }
+
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <label>
+      <input type="checkbox">
+      <span>${task}</span>
+    </label>
+    <span class="edit-btn">Edit</span>
+    <span class="delete-btn">Delete</span>
+    `;
+
+  listContainer.appendChild(li);
+
+  // clear the input field
+  inputBox.value = " ";
+
+  // attach event listeners to the new task
+  const checkbox = li.querySelector("input");
+  const editBtn = li.querySelector(".edit-btn");
+  const taskSpan = li.querySelector("span");
+  const deleteBtn = li.querySelector(".delete-btn");
+
+  // strike out the completed task
+  checkbox.addEventListener("click", function () {
     li.classList.toggle("completed", checkbox.checked);
+    updateCounters();
   });
 
+  editBtn.addEventListener("click", function () {
+    const update = prompt("Edit task:", taskSpan.textContent);
+    if (update !== null) {
+      taskSpan.textContent = update;
+      li.classList.remove("completed");
+      checkbox.checked = false;
+      updateCounters();
+    }
+  });
 
+  deleteBtn.addEventListener("click", function () {
+    if (confirm("Are you sure you want to delete this task?")) {
+      li.remove();
+      updateCounters();
+    }
+  });
+  updateCounters();
+}
 
-
-
+// add task when pressing Enter key
+inputBox.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    addTask();
+  }
+});
