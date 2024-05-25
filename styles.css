@@ -561,10 +561,12 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 
 
 .checklist-container {
-  max-height: 200px; /* Example fixed height for scrollable area */
-  overflow-y: auto;
+  max-height: 300px; /* Example fixed height for scrollable area */
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
-.checklist-container::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit browsers */
+#checklist::-webkit-scrollbar {
+  display: none;
+  width: 0; /* Hide scrollbar for WebKit browsers */
 }

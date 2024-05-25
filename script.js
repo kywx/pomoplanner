@@ -1,4 +1,4 @@
-function startTimer(duration, display) {
+function startTimer(duration, display, pause=0) {
     var timer = duration, minutes, seconds;
 
     function updateDisplay() {
@@ -15,10 +15,13 @@ function startTimer(duration, display) {
             // Uncomment the following line if you want to reset the timer automatically after reaching 0
             // timer = duration;
         }
+        
     }
-
-    updateDisplay(); // Initial call to update display immediately
-    setInterval(updateDisplay, 1000);
+    
+    if (!pause) {
+        updateDisplay(); // Initial call to update display immediately
+        setInterval(updateDisplay, 1000);
+    }
 }
 
 window.onload = function () {
@@ -27,21 +30,13 @@ window.onload = function () {
     var startButton = document.querySelector('#startButton');
 
     startButton.addEventListener('click', function () {
-        startTimer(time, display);
-        startButton.textContent = "Pause";
-        /*
-        if (startButton.textContent == "Start Timer") {
-            startButton.textContent = "Pause";
+        if (startButton.textContent = "Restart") {
             startTimer(time, display);
+            startButton.textContent = "Start Timer";
         } else {
-            startButton.textContent = "Restart Timer";
-            startTimer(1500, display);
+            startTimer(time, display, 1);
+            startButton.textContent = "Restart";
         }
-        */
-        //startButton.disabled = true;
-        
-        
-
     });
     
 };
@@ -135,7 +130,15 @@ function allIncompleteTasks() {
 
 
 function generateDaySchedule(year, month, day) {
-    //TODO
+    schedule = loadSchedule();
+    filter = new Date(year, month, day);
+    events = schedule.events;
+    tasks = schedule.tasks;
+    dayevents = [];
+    daytasks = [];
+    for(let i = 0; i < events.length(); i++) {
+        
+    }
 }
 
 
