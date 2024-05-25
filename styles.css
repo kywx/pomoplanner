@@ -1,0 +1,109 @@
+.burger {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+  }
+  
+  .burger input {
+    display: none;
+  }
+  
+  .burger span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: black;
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+  }
+  
+  .burger span:nth-of-type(1) {
+    top: 0px;
+    transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(3) {
+    top: 100%;
+    transform-origin: left center;
+    transform: translateY(-100%);
+  }
+  
+  .burger input:checked ~ span:nth-of-type(1) {
+    transform: rotate(45deg);
+    top: 0px;
+    left: 5px;
+  }
+  
+  .burger input:checked ~ span:nth-of-type(2) {
+    width: 0%;
+    opacity: 0;
+  }
+  
+  .burger input:checked ~ span:nth-of-type(3) {
+    transform: rotate(-45deg);
+    top: 28px;
+    left: 5px;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #authorize_button, #signout_button {
+    margin: 10px;
+  }
+  
+  #content {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  
+#safeTimer {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #FFD1DC;
+    padding: 10px;
+    box-shadow: 0 0 25px rgb(248, 199, 222);
+    z-index: 1000; /* Ensure it is on top of other elements */
+    padding: 10px 20px;
+    border: none;
+    font-size: 17px;
+    color: #fff;
+    border-radius: 7px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.5s;
+    transition-property: box-shadow;
+  }
+
+
+  
+  #safeTimer:hover {
+  box-shadow: 0 0 5px rgb(230, 195, 231),
+              0 0 25px rgb(230, 195, 231),
+              0 0 50px rgb(230, 195, 231),
+              0 0 100px rgb(230, 195, 231);
+  }
+  
+  #safeTimerDisplay {
+    font-size: 1.5em;
+  }
