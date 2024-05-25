@@ -5,81 +5,111 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://apis.google.com/js/api.js"></script>
+    <script type="module">
+      import ICAL from "https://unpkg.com/ical.js";
+      document.querySelector("button").addEventListener("click", () => {
+        ICAL.parse(document.getElementById("txt").value);
+      });
+    </script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Pomodoro Schedule</title>
 </head>
 
 <body>
-    <button id="authorize_button">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-    <pre id="content"></pre>
 
-    <div id="safeTimer">
-        <h2>Safe Timer</h2>
-        <p id="safeTimerDisplay">25:00</p>
-        <button id="startButton" class="btn">Start Timer</button> <!-- Updated Start Timer Button -->
+  <button id="uploadButton">Upload iCalendar File</button>
+  <input type="file" id="fileInput" accept=".ics" style="display: none;">
+
+  <div id="safeTimer">
+      <h2>Safe Timer</h2>
+      <p id="safeTimerDisplay">25:00</p>
+      <button id="startButton" class="btn">Start Timer</button> <!-- Updated Start Timer Button -->
+  </div>
+
+  <label class="burger" for="burger">
+      <input type="checkbox" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+  </label>
+  
+  <header>
+      <div id="welcome">Welcome!</div>
+  </header>
+
+  <section class="home">
+      <div class="home-content">
+          <h1></h1>
+          <p></p>
+      </div>
+  </section>
+
+  <div class="wrapper">
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+    <div class="card">
+      <section class="top">
+        <strong class="u-l"> Workspace</strong>
+      </section>
+      <section class="bottom">
+        <ul class="users">
+          <li class="user">
+            <span contenteditable="true" class="task-link">ICS 46 - Project 4</span>
+            
+            <span contenteditable="true" class="task">https://ics.uci.edu/~mikes/</span> <!--a href="https://ics.uci.edu/~mikes/"></a>-->
+          </li>
+          <li class="user">
+            <span contenteditable="true" class="task-link">Significance of Blue Doors Essay</span>
+            <span contenteditable="true" class="task">www.historyofbluedoors.com</span>
+            <span contenteditable="true" class="task">www.researchlink.com</span>
+            <span contenteditable="true" class="task">www.bluedoorsmatter.com</span>
+            
+          </li>
+          <li class="user">
+            <span contenteditable="true" class="task-link">ICS 46 - Project 4</span>
+            <span contenteditable="true" class="task">gradescope.com/{user}</span>
+          </li>
+          <li class="user">
+            <span contenteditable="true" class="task-link">Noah Walker</span>
+            <span contenteditable="true" class="task">Journalist</span>
+          </li>
+        </ul>
+      </section>
+    </div>
     </div>
 
-    <label class="burger" for="burger">
-        <input type="checkbox" id="burger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </label>
-    
-    <header>
-        <div>Welcome!</div>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-        </ul>
-    </header>
+    </div>
 
-    <section class="home">
-        <div class="home-content">
-            <h1></h1>
-            <p></p>
+    <div id="checklist">
+      
+      <input value="" value="1" name="r" type="checkbox" id="01">
+      <label for="01">Bread</label>
+      <input value="2" name="r" type="checkbox" id="02">
+      <label for="02">Cheese</label>
+      <input value="3" name="r" type="checkbox" id="03">
+      <label for="03">Coffee</label>
+    </div>
+
+    <div id="todoList">
+      <strong> TO DO</strong>
+      <div id="todo-form">
+        <input type="text" class="input-item" name="input_box" id="input-box" placeholder="Insert Task">
+        <button id="input-button" onclick="insertTask()">Insert</button>
+      </div>
+      
+      <ul id="list-container">
+
+      </ul>
+
+      <div class="counter-container">
+        <div id="task-counters">
+          Completed: <span id="completed-counter">0</span> | Uncompleted: <span id="uncompleted-counter">0</span>
         </div>
-    </section>
-
-    <div class="wrapper">
-      <div class="circle-1"></div>
-      <div class="circle-2"></div>
-      <div class="card">
-        <section class="top">
-          <span class="u-l">User list:</span>
-        </section>
-        <section class="bottom">
-          <ul class="users">
-            <li class="user">
-              <span class="user-name">Olivia Anderson</span>
-              <span class="user-occupation">Marketing Manager</span>
-            </li>
-            <li class="user">
-              <span class="user-name">Ethan Murphy</span>
-              <span class="user-occupation">Graphic Designer</span>
-            </li>
-            <li class="user">
-              <span class="user-name">Ava Collins</span>
-              <span class="user-occupation">Financial Analyst</span>
-            </li>
-            <li class="user">
-              <span class="user-name">Noah Walker</span>
-              <span class="user-occupation">Journalist</span>
-            </li>
-          </ul>
-        </section>
       </div>
+        
       </div>
-
-      </div>
-      <div id="checklist">
-        <input value="" value="1" name="r" type="checkbox" id="01">
-        <label for="01">Bread</label>
-        <input value="2" name="r" type="checkbox" id="02">
-        <label for="02">Cheese</label>
-        <input value="3" name="r" type="checkbox" id="03">
-        <label for="03">Coffee</label>
-      </div>
+    </div>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
