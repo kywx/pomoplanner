@@ -34,6 +34,7 @@ body {
   position: absolute;
   bottom: 0px;
   right: 0px;
+  z-index: 1001;
 }
 
 #welcome {
@@ -867,6 +868,7 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   font-weight: 700;
   z-index: 100;
   cursor: pointer;
+  margin-left:-15px;
 }
 
 .check:checked + .checkbox .slide .toggle {

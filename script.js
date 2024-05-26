@@ -436,6 +436,27 @@ function sortEvents() {
     localStorage.setItem("Schedule");
 }
 
+function updateMonthlySchedule () {
+    const scheduleContainer = document.getElementById("monthly-schedule");
+    
+    const schedule = loadSchedule();
+    const events = schedule.events;
+    console.log("loaded monthly schedule")
+
+    events.forEach(event => {
+        const eventName = event.eventname;
+        const fdate = new Date(event.eventdate);
+        const day = fdate.getDay();
+        const duration = event.eventtime / 60;
+        const endDate = new Date(fdate.getTime() + duration * 60000 * 60);
+        const cell = document.getElementById(`day-${day}`);
+        if (cell) {
+            cell.innerHTML += `<br><span class="additional-text">${eventName 
+            + ": " + fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + "-" + endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
+        }
+    })
+}
+
 
 function updateDailySchedule() {
     const scheduleContainer = document.getElementById("daily-schedule");
