@@ -222,6 +222,13 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   position: absolute;
 }
 
+.x {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+
+}
+
 .wrapper {
   max-width: 400px;
   cursor: move;

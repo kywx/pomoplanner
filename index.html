@@ -9,7 +9,7 @@
     <script type="module" src = "node_modules/ical.js/dist/ical.min.js"></script>
     <script type="module" src = "script.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Pomodoro Schedule</title>
+    <title>PomoPlanner</title>
 
     <style>
       table {
@@ -128,7 +128,9 @@
   
   <div id="mySafeTimer">
   <div id="safeTimer">
+    <div class="handle" id="m_wrapper">
       <h2 id="pomo-title">Pomodoro</h2>
+    </div>
       <p id="safeTimerDisplay">25:00</p>
         <button id="startButton" class="btn">Start Timer</button> <!-- Updated Start Timer Button -->
         <label class="container">
@@ -161,17 +163,20 @@
   </section>
 
 
-  <div class="wrapper" id="m_wrapper">
+  <div class="wrapper">
     <div class="card">
+    <div class="handle" id="m_wrapper">
+        :{}
+    </div>
       
 
       <button class="animated-button">+</button>
 
       
-      <section class="top" id="m_wrapper">
+      <section class="top">
         <strong class="u-l"  id="m_wrapper"> Workspace</strong>
       </section>
-      
+    
       <section class="bottom">
         <div>
           <img id="bun" src="./bunny.png" height=120px width=120px>
@@ -255,7 +260,9 @@
           
           <p></p>
 
-
+        <div>
+          <img id="">
+        </div>
         <input value="" value="1" name="r" type="checkbox" id="01">
         <label contenteditable=true for="01">Bread</label>
         <input value="2" name="r" type="checkbox" id="02">

@@ -230,8 +230,9 @@ dragElement(document.getElementById("checklist"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  elmnt.onmousedown = dragMouseDown;
-  
+  const handle = document.querySelector(".handle");
+  handle.onmousedown = dragMouseDown;
+  console.log(handle);
 
   function dragMouseDown(e) {
     e = e || window.event;
