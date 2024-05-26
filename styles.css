@@ -158,7 +158,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 }
 
 .additional-text {
-  font-size: 1em;
+  font-size: 0.9em;
   background-color: #faa1b8;
   color: white;
   border-radius: 1em;
@@ -185,7 +185,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   width: 100%;
   height: 80%;
   table-layout: fixed;
-  background-color: rgb(235, 206, 213);
+  background-color: #fcf1f4;
 }
 
 #calTable td, #calTable th {
@@ -217,7 +217,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 
 
 /* Docker for links */
-.m_wrapper {
+.m_f {
   z-index: 10000;
   position: absolute;
 }
@@ -231,7 +231,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 
 .wrapper {
   max-width: 400px;
-  cursor: move;
+  
   height: 400px;
   min-width: 400px;
   border-radius: .75rem;
@@ -360,6 +360,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   font-size: 1.1rem;
   font-weight: 700;
   font-size: x-large;
+  cursor: move;
 }
 
 
@@ -375,21 +376,27 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   --text: #414856;
   --check: rgb(252, 222, 224);
   --disabled: rgb(89, 89, 89);
-  --width: 100px;
-  --height: 180px;
+  --width: 150px;
+  --height: 400x;
   --border-radius: 10px;
-  background: var(--background);
   width: var(--width);
   height: var(--height);
+  max-height: 300px;
+  background: var(--background);
   border-radius: var(--border-radius);
   position: absolute;
   box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
   padding: 30px 85px;
   display: grid;
-  grid-template-columns: 30px auto;
   align-items: center;
+  grid-template-columns: 30px auto;
   justify-content: center;
+
+  max-height: 300px;
   overflow-y: auto;
+  overflow-x: visible;
+
+  
   z-index: 9998;
   cursor: move;
   transition: box-shadow 0.3s ease; /* Transition for smooth hover effect */
@@ -408,12 +415,14 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   position: relative;
   cursor: pointer;
   display: grid;
+  font-weight: bold;
+  color: rgb(219, 134, 153);
   align-items: center;
-  width: 100px;
+  width: fit-content;
   height: 50px;
   transition: color 0.3s ease;
-  margin-right: 20px;
-  z-index: 7000;
+  left: 150px;
+  /*z-index: 7000;*/
 }
 
 #checklist label::before, #checklist label::after {
@@ -424,7 +433,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 #checklist label::before {
   height: 2px;
   width: 8px;
-  left: -27px;
+  left: -20px;
   background: var(--check);
   border-radius: 2px;
   transition: background 0.3s ease;
@@ -442,7 +451,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   -webkit-appearance: none;
   -moz-appearance: none;
   position: relative;
-  height: 15px;
+  height: 16px;
   width: 15px;
   outline: none;
   border: 0;
@@ -451,7 +460,9 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   background: var(--background);
   display: grid;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 300px;
+  left: 95px;
+  top:44px;
 }
 
 #checklist input[type="checkbox"]::before, #checklist input[type="checkbox"]::after {
@@ -496,6 +507,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 #checklist input[type="checkbox"]:checked + label::after {
   animation: firework 0.5s ease forwards 0.1s;
 }
+
 
 @keyframes move {
   50% {
@@ -661,12 +673,28 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   color: rgb(184, 184, 184);
 }
 
+#dog {
+  position: absolute;
+  top: 0px;
+  left: -10px;
+}
 
+.task_values {
+  margin-left: 150px;
+  z-index: 500;
+}
+
+.task_item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
 .checklist-container {
   max-height: 300px; /* Example fixed height for scrollable area */
   overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-x: visible;
+  z-index: 1000;
 }
 
 #checklist::-webkit-scrollbar {
@@ -695,7 +723,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 
 /*------ Pause Resume ------*/
 .container {
-  --color: #a5a5b0;
+  --color: #e064a8;
   --size: 30px;
   display: flex;
   justify-content: center;
@@ -827,8 +855,8 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   position: relative;
   width: 60px;
   height: 40px;
-  left: 130px;
-  bottom:18px;
+  left: 77px;
+  bottom:-4px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -844,7 +872,7 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
 }
 
 .CheckListButton .button__text {
-  transform: translateX(10px);
+  transform: translateX(9px);
   color: var(--font-color);
   font-weight: 600;
 }
@@ -906,9 +934,9 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   border-radius: 30px;
   left: 5px;
   cursor: pointer;
-  background: linear-gradient(40deg, #9b2c7d,#e9e8cf 70%);
+  background: linear-gradient(40deg, #9b2c7d,#e2cfe9 70%);
   transition: 0.4s;
-  box-shadow: 0px 0px 3px rgb(241, 233, 195), 0px 0px 5px rgb(168, 16, 76);
+  box-shadow: 0px 0px 3px rgb(232, 195, 241), 0px 0px 5px rgb(168, 16, 76);
 }
 
 .checkbox .slide {
@@ -926,11 +954,12 @@ box-shadow: 0 0 5px rgb(210, 142, 169),
   z-index: 100;
   cursor: pointer;
   margin-left:-15px;
+  color: #5c1340;
 }
 
 .check:checked + .checkbox .slide .toggle {
   transform: translateX(113px);
-  background: linear-gradient(40deg, #8983F7, #b5d4e7 70%);
+  background:  linear-gradient(40deg, #8983F7, #b5d4e7 70%);
   box-shadow: -0px -0px 10px #8983F7, -0px -0px 3px #8983F7;
 }
 

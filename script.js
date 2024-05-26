@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const label = document.createElement('label');
       label.htmlFor = '0' + index;
       label.contentEditable = true;
-      label.textContent = 'New Item ' + index; // Example text for new item
+      label.textContent = 'Task'; // Example text for new item
 
       // Append checkbox and label to checklist
       checklist.appendChild(checkbox);
@@ -131,7 +131,7 @@ function startTimer(duration, display) {
                 m_bear.src = "/sleepbear.png";
                 on_break = 1;
                 breaks += 1;
-                savedtime = 2;   // 5 minutes
+                savedtime = 300;   // 5 minutes
                 if (breaks > 4) {
                     breaks = 0;
                     savedtime = 1200;  // 20 minutes
@@ -170,7 +170,7 @@ function resumeTimer(intervalID, display) {
 
 
 window.onload = function () {
-    var time = 3; // Your time in seconds here 1500 (25 minutes)
+    var time = 1500; // Your time in seconds here 1500 (25 minutes)
     var display = document.querySelector('#safeTimerDisplay');
     var startButton = document.querySelector('#startButton');
     var pauseButton = document.querySelector('#pau');
@@ -230,9 +230,12 @@ dragElement(document.getElementById("checklist"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  const handle = document.querySelector(".handle");
-  handle.onmousedown = dragMouseDown;
-  console.log(handle);
+  const handle = elmnt.querySelector(".handle");
+  if (handle) {
+    handle.onmousedown = dragMouseDown;
+  } else {
+    elmnt.onmousedown = dragMouseDown;
+  }
 
   function dragMouseDown(e) {
     e = e || window.event;
