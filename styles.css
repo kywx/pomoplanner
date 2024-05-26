@@ -1,75 +1,6 @@
 body {
-  background-color: #f7e9f5;
-}
-
-.burger {
-  position: absolute;
-  width: 40px;
-  height: 30px;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  cursor: pointer;
-  display: block;
-}
-
-.burger input {
-  display: none;
-}
-
-.burger span {
-  display: block;
-  position: absolute;
-  height: 4px;
-  width: 100%;
-  background: black;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: .25s ease-in-out;
-}
-
-.burger span:nth-of-type(1) {
-  top: 0px;
-  transform-origin: left center;
-}
-
-.burger span:nth-of-type(2) {
-  top: 50%;
-  transform: translateY(-50%);
-  transform-origin: left center;
-}
-
-.burger span:nth-of-type(3) {
-  top: 100%;
-  transform-origin: left center;
-  transform: translateY(-100%);
-}
-
-.burger input:checked ~ span:nth-of-type(1) {
-  transform: rotate(45deg);
-  top: 0px;
-  left: 5px;
-}
-
-.burger input:checked ~ span:nth-of-type(2) {
-  width: 0%;
-  opacity: 0;
-}
-
-.burger input:checked ~ span:nth-of-type(3) {
-  transform: rotate(-45deg);
-  top: 28px;
-  left: 5px;
-}
-
-body {
   font-family: Arial, sans-serif;
-}
-
-#authorize_button, #signout_button {
-  margin: 10px;
+  background-color: #f7e9f5;
 }
 
 #content {
@@ -80,7 +11,7 @@ body {
 
 
 #safeTimer {
-  position: fixed;
+  position: absolute;
   bottom: 10px;
   right: 10px;
   background-color: #FFD1DC;
@@ -101,9 +32,20 @@ body {
 
 
 #welcome {
-  color: rgb(248, 156, 207);
-  font-size: 1.5em;
-  font-family: "Dosis", sans-serif;
+  color: rgb(216, 87, 115);
+  overflow: hidden; /* Hide overflowing text */
+  white-space: nowrap; /* Keep text in one line */
+  animation: typing 3s steps(7); /* Typing animation */
+  font-size: 30px;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 15%;
+  }
 }
 
 #safeTimer:hover {
@@ -119,24 +61,60 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 
 #uploadButton {
   position: fixed;
-  color: rgb(241, 174, 236); 
+  color: #faa1b8; 
+  right: 350px;
   background-color: white; 
-  bottom: 300px;
+  border: 1px solid #faa1b8;
+  text-align: center;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 0.4em;
+}
+
+
+#uploadButton:hover {
+  background-color: #faa1b8;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+#schedule {
+  position: fixed;
+  top: 50px;
+  height: 600px;
+  width: 500px;
   right: 100px;
+  border-color: #faa1b8;
+  background-color: white;
 }
 
-
-
-.btn {
-  transition: all 0.3s ease-in-out;
+.event-card {
+  position: relative; 
+  left: 50px;
+  top: 50px;
   font-family: "Dosis", sans-serif;
+  background-color: #faa1b8;
+  color: white;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border: 0.5em;
+  border-radius: 1em;
+  z-index: 50;
 }
+
+.event-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
 
 .btn {
   width: 100px;
   height: 40px;
   border-radius: 25px;
-  background-image: linear-gradient(135deg, #feb692 0%, #ea5455 100%);
+  background-image: linear-gradient(135deg, #faa1b8 0%, rgb(233, 117, 148) 100%);
   box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
   outline: none;
   cursor: pointer;
@@ -161,14 +139,16 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   --white: #e3e3e3;
   --bc: rgb(203,46,79);
   --bc-al: rgba(203,46,79,0.6);
+  
 }
 
 .card {
-  max-width: fit-content;
+  max-width: 400px;
+  height: 400px;
   padding: 1rem 0;
   display: grid;
   grid-template-areas: "top" "bottom";
-  grid-template-rows: 20% 1fr;
+  grid-template-rows: 4%;
   border: 1px solid var(--bc-al);
   border-radius: .75rem;
   background: var(--bc-al);
@@ -176,7 +156,14 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   backdrop-filter: blur(14px);
   box-shadow: 0 15px 30px -15px var(--bc-al);
   isolation: isolate;
+  overflow: hidden;
+  overflow-y: auto; /* Enable vertical scrolling */
 }
+
+.card::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers */
+}
+
 
 /*
 .circle-1 {
@@ -223,7 +210,7 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 
 .user {
   width: 50%;
-  margin-left: auto;
+  /*margin-left: auto;*/
   margin-right: auto;
   padding: 0.75rem 4rem;
   display: flex;
@@ -308,7 +295,8 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   cursor: pointer;
   display: grid;
   align-items: center;
-  width: fit-content;
+  width: 100px;
+  height: 40px;
   transition: color 0.3s ease;
   margin-right: 20px;
 }
@@ -569,4 +557,194 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 #checklist::-webkit-scrollbar {
   display: none;
   width: 0; /* Hide scrollbar for WebKit browsers */
+}
+
+
+.linklist-container {
+  max-height: 500px; /* Example fixed height for scrollable area */
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+#card::-webkit-scrollbar {
+  display: none;
+  width: 0; /* Hide scrollbar for WebKit browsers */
+}
+
+
+
+.startButton {
+  width:50%;
+  float:left;
+}
+
+/*------ Pause Resume ------*/
+.container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+  width:50%;
+  float:right;
+  bottom: 20px;
+}
+
+.container .play {
+  position: absolute;
+  animation: keyframes-fill .5s;
+}
+
+.container .pause {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill .5s;
+}
+
+/* ------ On check event ------ */
+.container input:checked ~ .play {
+  display: none;
+}
+
+.container input:checked ~ .pause {
+  display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: rotate(-180deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(-10deg) scale(1.2);
+  }
+}
+
+
+
+
+
+.animated-button {
+  background-color: #d43d86;
+  border: none;
+  color: #ffffff;
+  padding: 0px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  width: 60px;
+  height: 50px;
+  margin: 2px 4px;
+  top: px;
+  left: 315px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.animated-button:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+}
+
+.animated-button:hover:after {
+  width: 210px;
+  height: 200px;
+  opacity: 1;
+}
+
+.animated-button:focus {
+  outline: none;
+}
+
+.animated-button:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+.CheckListButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100px;
+  height: 20px;
+  border: none;
+  padding: 0px 20px;
+  background-color: rgb(245, 127, 228);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px rgb(202, 57, 166);
+  transition-duration: .3s;
+}
+
+.svg {
+  width: 13px;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  fill: white;
+  transition-duration: .3s;
+}
+
+.CheckListButton:hover {
+  color: transparent;
+}
+
+.CheckListButton:hover svg {
+  right: 43%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: .3s;
+}
+
+.CheckListButton:active {
+  transform: translate(3px , 3px);
+  transition-duration: .3s;
+  box-shadow: 2px 2px 0px rgb(211, 48, 168);
 }

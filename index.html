@@ -5,34 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://apis.google.com/js/api.js"></script>
-    <script type="module">
-      import ICAL from "https://unpkg.com/ical.js";
-      document.querySelector("button").addEventListener("click", () => {
-        ICAL.parse(document.getElementById("txt").value);
-      });
-    </script>
-    <script src="script.js"></script>
+    <script type="module" src = "node_modules/ical.js/dist/ical.min.js"></script>
+    <script type="module" src = "script.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     <title>Pomodoro Schedule</title>
 </head>
 
 <body>
-
+  <div id="schedule">
   <button id="uploadButton">Upload iCalendar File</button>
   <input type="file" id="fileInput" accept=".ics" style="display: none;">
+  
 
+  </div>
+  
   <div id="safeTimer">
       <h2>Pomodoro</h2>
       <p id="safeTimerDisplay">25:00</p>
-      <button id="startButton" class="btn">Start Timer</button> <!-- Updated Start Timer Button -->
-  </div>
+        <button id="startButton" class="btn">Start Timer</button> <!-- Updated Start Timer Button -->
+        <label class="container">
+        <input type="checkbox" id="pau"/>
+          <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="play"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"></path></svg>
+          <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="pause"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path></svg></label>
+      
+    </div>
 
-  <label class="burger" for="burger">
+  <!--<label class="burger" for="burger">
       <input type="checkbox" id="burger">
       <span></span>
       <span></span>
       <span></span>
-  </label>
+  </label>-->
   
   <header>
       <div id="welcome">Welcome!</div>
@@ -49,9 +53,15 @@
     <div class="circle-1"></div>
     <div class="circle-2"></div>
     <div class="card">
+      
+
+      <button class="animated-button">+</button>
+
+      
       <section class="top">
         <strong class="u-l"> Workspace</strong>
       </section>
+      
       <section class="bottom">
         <ul class="users" id="taskList">
           <li class="user">
@@ -61,28 +71,27 @@
           <li class="user">
             <span contenteditable="true" class="task-link">Significance of Blue Doors Essay</span>
             <span contenteditable="true" class="task">www.historyofbluedoors.com</span>
-            <span contenteditable="true" class="task">www.researchlink.com</span>
-            <span contenteditable="true" class="task">www.bluedoorsmatter.com</span>
           </li>
           <li class="user">
-            <span contenteditable="true" class="task-link">ICS 46 - Project 4</span>
+            <span contenteditable="true" class="task-link">ICS 51 - Project 4</span>
             <span contenteditable="true" class="task">gradescope.com/{user}</span>
           </li>
           <li class="user">
-            <span contenteditable="true" class="task-link">Noah Walker</span>
-            <span contenteditable="true" class="task">Journalist</span>
+            <span contenteditable="true" class="task-link">Genshindle</span>
+            <span contenteditable="true" class="task">https://us.genshindle.com/</span>
+          </li>
+          <li class="user">
+            <span contenteditable="true" class="task-link">Loldle</span>
+            <span contenteditable="true" class="task">https://loldle.net/</span>
           </li>
         </ul>
-        
-        <button id="addTaskButton">Add Task</button>
-        
       </section>
     </div>
     </div>
+  </div>
 
-    </div>
     <p></p>
-    <script>
+    <!--<script>
     document.addEventListener('DOMContentLoaded', function() {
       const addTaskButton = document.getElementById('addTaskButton');
       const taskList = document.getElementById('taskList');
@@ -116,24 +125,30 @@
         index++; // Increment index for next task
       });
     });
-  </script>
+  </script>-->
 
 
   
     <div class="checklist-container">
       <div id="checklist">
-        
+           <button class="CheckListButton">Add 
+            <svg class="svg" viewBox="0 0 512 512">
+              <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path></svg>
+          </button>
+          <p></p>
+
+
         <input value="" value="1" name="r" type="checkbox" id="01">
-        <label for="01">Bread</label>
+        <label contenteditable=true for="01">Bread</label>
         <input value="2" name="r" type="checkbox" id="02">
-        <label for="02">Cheese</label>
+        <label contenteditable=true for="02">Cheese</label>
         <input value="3" name="r" type="checkbox" id="03">
-        <label for="03">Coffee</label>
+        <label contenteditable=true for="03">Coffee</label>
       </div>
     </div>
 
     <button id="addCheckboxButton">Add Checkbox</button>
-    <script>
+    <!--<script>
       document.addEventListener('DOMContentLoaded', function() {
         const addCheckboxButton = document.getElementById('addCheckboxButton');
         const checklist = document.getElementById('checklist');
@@ -161,16 +176,7 @@
           index++; // Increment index for next item
         });
       });
-    </script>
-
-<div class="hello">  <dl>
-    <dt>Coffee</dt>
-    <dd>- ack hot drink</dd>
-    <dt>Milk</dt>
-    <dd>- ite cold drink</dd>
-  </dl>
-</div>
->
+    </script>-->
 
 </body>
 </html>
