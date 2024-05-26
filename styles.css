@@ -32,7 +32,7 @@ body {
 
 
 #welcome {
-  color: rgb(216, 87, 115);
+  color: rgb(220, 127, 147);
   overflow: hidden; /* Hide overflowing text */
   white-space: nowrap; /* Keep text in one line */
   animation: typing 3s steps(7); /* Typing animation */
@@ -81,25 +81,32 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 
 #schedule {
   position: fixed;
-  top: 50px;
-  height: 600px;
-  width: 500px;
+  top: 10px;
+  height: 700px;
+  width: 700px;
   right: 100px;
   border-color: #faa1b8;
   background-color: white;
   border-radius: 1em;
 }
 
+#daily_header {
+  color: #faa1b8;
+  margin-left: 50px;
+  font-family: "Dosis", sans-serif;
+}
+
 .event-card {
   position: relative; 
   left: 50px;
-  top: 50px;
+  
   font-family: "Dosis", sans-serif;
   background-color: #faa1b8;
   color: white;
   display: flex;
   justify-content: center;
-  width: 400px;
+  width: 600px;
+  height: 60px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border: 0.5em;
   border-radius: 1em;
@@ -115,6 +122,8 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 .event-card h1,
 .event-card p {
   margin-left: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .event-card p {
@@ -308,7 +317,7 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   display: grid;
   align-items: center;
   width: 100px;
-  height: 40px;
+  height: 50px;
   transition: color 0.3s ease;
   margin-right: 20px;
 }
@@ -779,4 +788,66 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 .CheckListButton:active {
   transform: translate(3px, 3px);
   box-shadow: 0px 0px var(--main-color);
+}
+
+
+
+
+
+
+
+
+
+/*Toggle Daily to Monthly*/
+.checkbox {
+  width: 223px;
+  height: 60px;
+  background-color: #d0d0d0;
+  border-radius: 30px;
+  position: relative;
+  color: black;
+  overflow: hidden;
+}
+
+#checkbox_toggle {
+  display: none;
+}
+
+.checkbox .toggle {
+  width: 100px;
+  height: 50px;
+  position: absolute;
+  border-radius: 30px;
+  left: 5px;
+  cursor: pointer;
+  background: linear-gradient(40deg, #FF0080,#FF8C00 70%);
+  transition: 0.4s;
+  box-shadow: 0px 0px 3px rgb(255, 255, 20), 0px 0px 5px rgb(255, 255, 20);
+}
+
+.checkbox .slide {
+  width: 230px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.checkbox .slide .text {
+  font-size: 16px;
+  font-weight: 700;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.check:checked + .checkbox .slide .toggle {
+  transform: translateX(113px);
+  background: linear-gradient(40deg, #8983F7, #A3DAFB 70%);
+  box-shadow: -0px -0px 10px #8983F7, -0px -0px 3px #8983F7;
+}
+
+.check:checked + .checkbox .slide {
+  background-color: #0a1929;
+  color: #fff;
 }

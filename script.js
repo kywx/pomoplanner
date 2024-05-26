@@ -87,6 +87,7 @@ let intID;
 let savedtime;
 let breaks = 0;
 let on_break = 0;
+// let alerted = 0;
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -102,19 +103,29 @@ function startTimer(duration, display) {
         display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
+            timer = 300;
+            breaks += 1;
+            clearInterval(intID);
+            window.alert("BREAK TIME");
+            
+            
+            // startButton.textContent = "Start Break";
+            /*
             if (on_break) {
                 on_break = 0;
                 var change_title = document.querySelector("pomo-title");
                 change_title.textContent = "Pomodoro";
                 intID = pauseTimer;
+                var startButton = document.querySelector('#startButton');
+                startButton.disabled = false;
                 
             } else {
-                timer = 0;
                 breaks += 1;
                 // start break time
                 on_break = 1;
                 startBreak(display);
             }
+            */
             return;
         }
         savedtime = timer;
@@ -141,25 +152,10 @@ function resumeTimer(intervalID, display) {
     return startTimer(savedtime, display);
 }
 
-function startBreak(display) {
-    // check how many breaks
-    var change_title = document.querySelector("pomo-title");
-    change_title.textContent = "It's time for a break...";
-    var break_time = 300;   // 5 minutes
-    if (breaks > 4) {
-        // take long break
-        breaks = 0;
-        break_time = 1200;  // 20 minutes
-    }
-    intID = restartTimer(intID, break_time, display);
-    
-
-    // insert the destress stuff here
-}
 
 
 window.onload = function () {
-    var time = 1500; // Your time in seconds here (25 minutes)
+    var time = 5; // Your time in seconds here 1500 (25 minutes)
     var display = document.querySelector('#safeTimerDisplay');
     var startButton = document.querySelector('#startButton');
     var pauseButton = document.querySelector('#pau');
@@ -305,7 +301,7 @@ function autoSchedule() {
     tasks.sort((a,b) => new Date(a.taskdeadline).getTime() - new Date(b.taskdeadline).getTime());
     for(let i = 0; i < tasks.length; i++) {
         for(let j = 0; j < newschedule.length; j++) {
-            //if task can fit between two events and/or last event
+            //if task can fit between two elements and/or last element
             if(newschedule[j].hasOwn('eventdate')) {
                 prev = new Date(newschedule[j].eventdate).getTime() + parseInt(newschedule[j].eventtime);
             }
@@ -320,7 +316,12 @@ function autoSchedule() {
                     next = new Date(newschedule[j+1].taskdate).getTime();
                 }
                 if(prev + parseInt(tasks[i].time) < next) {
-                    
+                    temp = newschedule[j+1];
+                    newevent = tasks[i];
+                    for(k = j + 1; k <= newschedule.length; k++) {
+                        newschedule[j+1] = temp;
+                        
+                    }
                 }
             }
         }
@@ -431,8 +432,11 @@ function updateSchedule() {
         const eventDate = document.createElement("p");
         eventDate.classList.add("event-date");
         const fdate = new Date(event.eventdate);
-        eventDate.textContent = fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
+        const duration = event.eventtime / 60;
+        const newDate = new Date(fdate.getTime() + duration * 60000 * 60);
+        eventDate.textContent = fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + "-" + newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        eventCard.style.height = duration * 60 + "px"
+
         eventCard.appendChild(eventName);
         //eventCard.appendChild(eventDate);
         eventCard.appendChild(eventDate);
@@ -510,7 +514,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.log("Summary:", summary);*/
                         // Check if event is for today or later
                         //function addEvent(name, time, year, month, day, hours, minutes) {
-                        if (dtstart.getDate() >= today.getDate()) {
+                        if (dtstart.getDate() == today.getDate()) {
                             addEvent(summary,  
                                     differenceInMinutes, 
                                     dtstart.getFullYear(), 
