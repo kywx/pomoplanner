@@ -10,19 +10,134 @@
     <script type="module" src = "script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Pomodoro Schedule</title>
+
+    <style>
+      table {
+          border-collapse: collapse;
+          background: white;
+          color: black;
+      }
+       
+      th,
+      td {
+          font-weight: bold;
+      }
+    </style>
 </head>
 
 <body>
-  <div id="schedule">
-    <p></p>
+
+  <input id="checkbox_toggle" type="checkbox" class="check">
+    <div class="checkbox">
+      <label class="slide" for="checkbox_toggle">
+        <label class="toggle" for="checkbox_toggle"></label>
+        <label class="text" for="checkbox_toggle">Monthly</label>
+        <label class="text" for="checkbox_toggle">Daily</label>
+      </label>
+    </div>
+  
   <button id="uploadButton">Upload iCalendar File</button>
   <input type="file" id="fileInput" accept=".ics" style="display: none;">
-  <h1 id="daily_header">Daily</h1>
   
+  <div id="daily-schedule">
+    <h1 id="daily_header">Daily</h1>
+  </div>
 
-  </div id="pomo-timer">
+  <div id="monthly-schedule">
+    <h1 id="daily_header">Monthly</h1>
+    <h2 id="monthStyle">May 2024</h2>
+  <br/>
+
+  <table id="calTable" bgcolor="lightgrey" align="center"
+      cellspacing="21" cellpadding="21">
+
+      <!-- The tr tag is used to enter 
+          rows in the table -->
+
+      <!-- It is used to give the heading to the
+          table. We can give the heading to the 
+          top and bottom of the table -->
+
+      <caption align="top">
+          
+      </caption>
+
+      <thead>
+          <tr id="daysOfWeek">
+              <th>Sun</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Sat</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+          </tr>
+          <tr></tr>
+          <tr>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+              <td>9</td>
+              <td>10</td>
+              <td>11</td>
+          </tr>
+          <tr>
+              <td>12</td>
+              <td>13</td>
+              <td>14</td>
+              <td>15</td>
+              <td>16</td>
+              <td>17</td>
+              <td>18</td>
+          </tr>
+          <tr>
+              <td>19</td>
+              <td>20</td>
+              <td>21</td>
+              <td>22</td>
+              <td>23</td>
+              <td>24</td>
+              <td>25</td>
+          </tr>
+          <tr>
+              <td>26</td>
+              <td>27</td>
+              <td>28</td>
+              <td>29</td>
+              <td>30</td>
+              <td>31</td>
+              <td>1</td>
+          </tr>
+          <tr>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+          </tr>
+      </tbody>
+  </table>
+  </div>
+
   
   <div id="safeTimer">
+    
+      <img src="./bear.png" class="bear" height=100px width=300px/>
       <h2 id="pomo-title">Pomodoro</h2>
       <p id="safeTimerDisplay">25:00</p>
         <button id="startButton" class="btn">Start Timer</button> <!-- Updated Start Timer Button -->
@@ -31,7 +146,7 @@
           <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="play"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"></path></svg>
           <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="pause"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path></svg></label>
       
-    </div>
+  </div>
 
   <!--<label class="burger" for="burger">
       <input type="checkbox" id="burger">

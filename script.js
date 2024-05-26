@@ -84,10 +84,11 @@ document.addEventListener('DOMContentLoaded', function() { // Checklist pause, d
   
 
 let intID;
-let savedtime;
+let savedtime;      // when break, use savedtime
 let breaks = 0;
 let on_break = 0;
-// let alerted = 0;
+const m_startButton = document.querySelector('#startButton');
+const m_pauseButton = document.querySelector('#pau');
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -103,29 +104,27 @@ function startTimer(duration, display) {
         display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
-            timer = 300;
-            breaks += 1;
-            clearInterval(intID);
-            window.alert("BREAK TIME");
-            
-            
-            // startButton.textContent = "Start Break";
-            /*
+            timer = 0;
             if (on_break) {
+                // go back to Pomodoro
+                clearInterval(intID);
+                window.alert("Break is over :(");
                 on_break = 0;
-                var change_title = document.querySelector("pomo-title");
-                change_title.textContent = "Pomodoro";
-                intID = pauseTimer;
-                var startButton = document.querySelector('#startButton');
-                startButton.disabled = false;
-                
+                m_startButton.textContent = "Start Timer";
+                m_pauseButton.checked = false;
             } else {
-                breaks += 1;
-                // start break time
                 on_break = 1;
-                startBreak(display);
+                breaks += 1;
+                savedtime = 300;   // 5 minutes
+                if (breaks > 4) {
+                    breaks = 0;
+                    savedtime = 1200;  // 20 minutes
+                }
+                clearInterval(intID);
+                window.alert("Break time :)");
+                m_startButton.textContent = "Start Break";
+                m_pauseButton.checked = false;
             }
-            */
             return;
         }
         savedtime = timer;
@@ -155,19 +154,24 @@ function resumeTimer(intervalID, display) {
 
 
 window.onload = function () {
-    var time = 5; // Your time in seconds here 1500 (25 minutes)
+    var time = 1500; // Your time in seconds here 1500 (25 minutes)
     var display = document.querySelector('#safeTimerDisplay');
     var startButton = document.querySelector('#startButton');
     var pauseButton = document.querySelector('#pau');
     savedtime = time;
 
-    startButton.addEventListener('click', function () {
+    m_startButton.addEventListener('click', function () {
         
-        if (startButton.textContent == "Start Timer") {
+        if (m_startButton.textContent == "Start Timer") {
             intID = startTimer(time, display);
-            startButton.textContent = "Restart Timer";
+            m_startButton.textContent = "Restart Timer";
+            pauseButton.checked = 'true';
+        } else if (m_startButton.textContent == "Start Break") {
+            intID = startTimer(savedtime, display);
+            m_startButton.textContent = "Restart Pomodoro";
             pauseButton.checked = 'true';
         } else {
+            on_break = 0;
             pauseTimer(intID);
             savedtime = time;
             
@@ -179,7 +183,7 @@ window.onload = function () {
 
             display.textContent = minutes + ":" + seconds;
             
-            startButton.textContent = "Start Timer";
+            m_startButton.textContent = "Start Timer";
             pauseButton.checked = false;
         }
         
@@ -188,8 +192,8 @@ window.onload = function () {
     pauseButton.addEventListener('click', function () {
         if (pauseButton.checked) {
             // resume
-            if (startButton.textContent == "Start Timer") {
-                startButton.textContent = "Restart Timer";
+            if (m_startButton.textContent == "Start Timer") {
+                m_startButton.textContent = "Restart Timer";
             }
             intID = resumeTimer(intID, display);
         } else {
@@ -316,16 +320,17 @@ function autoSchedule() {
                     next = new Date(newschedule[j+1].taskdate).getTime();
                 }
                 if(prev + parseInt(tasks[i].time) < next) {
-                    temp = newschedule[j+1];
-                    newevent = tasks[i];
-                    for(k = j + 1; k <= newschedule.length; k++) {
-                        newschedule[j+1] = temp;
-                        
-                    }
+                    newschedule.splice(j+1, 0, tasks[i]);
+                    break;
                 }
+            }
+            else {
+                newschedule.splice(j+1, 0, tasks[i]);
+                break;
             }
         }
     }
+    return newschedule;
 }
 
 //returns list of incomplete task objects
@@ -340,6 +345,7 @@ function allIncompleteTasks() {
     }
     return incompletetasks;
 }
+
 
 function markTaskComplete(name, year, month, day, minutes) {
     const schedule = loadSchedule();const tasks = schedule.tasks;
@@ -404,6 +410,22 @@ function generateCurrentEvents() {
     generateDayEvents(today.year, today.month, today.day);
 }
 
+//
+document.addEventListener('DOMContentLoaded', function() {
+    const checkbox = document.getElementById('checkbox_toggle');
+    const dailySchedule = document.getElementById('daily-schedule');
+    const monthlySchedule = document.getElementById('monthly-schedule');
+  
+    checkbox.addEventListener('change', function() {
+      if (checkbox.checked) {
+        dailySchedule.style.display = 'block';
+        monthlySchedule.style.display = 'none';
+      } else {
+        dailySchedule.style.display = 'none';
+        monthlySchedule.style.display = 'block';
+      }
+    });
+});
 
 function sortEvents() {
     const schedule = loadSchedule();
@@ -415,8 +437,8 @@ function sortEvents() {
 }
 
 
-function updateSchedule() {
-    const scheduleContainer = document.getElementById("schedule");
+function updateDailySchedule() {
+    const scheduleContainer = document.getElementById("daily-schedule");
     
     const schedule = loadSchedule();
     const events = schedule.events;
@@ -438,7 +460,6 @@ function updateSchedule() {
         eventCard.style.height = duration * 60 + "px"
 
         eventCard.appendChild(eventName);
-        //eventCard.appendChild(eventDate);
         eventCard.appendChild(eventDate);
 
         scheduleContainer.appendChild(eventCard);
@@ -526,7 +547,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }
                 printSchedule();
-                updateSchedule();
+                updateDailySchedule();
                 alert("Parsing successful! Check console for details.");
             } catch (error) {
             console.error("Parsing error:", error);
