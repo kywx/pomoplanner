@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function() { // Checklist pause, d
 
 let intID;
 let savedtime;
+let breaks = 0;
+let on_break = 0;
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -100,11 +102,20 @@ function startTimer(duration, display) {
         display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
-            timer = 0;
-            
-            // Uncomment the following line if you want to reset the timer automatically after reaching 0
-            // timer = duration;
-            // add beeping>?
+            if (on_break) {
+                on_break = 0;
+                var change_title = document.querySelector("pomo-title");
+                change_title.textContent = "Pomodoro";
+                intID = pauseTimer;
+                
+            } else {
+                timer = 0;
+                breaks += 1;
+                // start break time
+                on_break = 1;
+                startBreak(display);
+            }
+            return;
         }
         savedtime = timer;
         
@@ -118,12 +129,6 @@ function pauseTimer(intervalID) {
     clearInterval(intervalID);
 }
 
-/*
-function resetTimer(intervalID, timer, display) {
-    clearInterval(intervalID);
-    display.textContent = "25:00";
-}
-*/
 
 function restartTimer(intervalID, time, display) {
     clearInterval(intervalID);
@@ -134,6 +139,22 @@ function restartTimer(intervalID, time, display) {
 function resumeTimer(intervalID, display) {
     clearInterval(intervalID);
     return startTimer(savedtime, display);
+}
+
+function startBreak(display) {
+    // check how many breaks
+    var change_title = document.querySelector("pomo-title");
+    change_title.textContent = "It's time for a break...";
+    var break_time = 300;   // 5 minutes
+    if (breaks > 4) {
+        // take long break
+        breaks = 0;
+        break_time = 1200;  // 20 minutes
+    }
+    intID = restartTimer(intID, break_time, display);
+    
+
+    // insert the destress stuff here
 }
 
 
@@ -162,11 +183,9 @@ window.onload = function () {
 
             display.textContent = minutes + ":" + seconds;
             
-            /*display.textContent = "25:00";*/
             startButton.textContent = "Start Timer";
             pauseButton.checked = false;
         }
-        
         
     });
 
@@ -181,9 +200,13 @@ window.onload = function () {
             // pause
             pauseTimer(intID);
         }
+
     });
     
 };
+
+
+
 
 
 
@@ -278,10 +301,29 @@ function autoSchedule() {
     sortEvents();
     const events = generateFutureEvents();
     const tasks = allIncompleteTasks();
-    const newschedule = [];
+    const newschedule = events;
     tasks.sort((a,b) => new Date(a.taskdeadline).getTime() - new Date(b.taskdeadline).getTime());
     for(let i = 0; i < tasks.length; i++) {
-        
+        for(let j = 0; j < newschedule.length; j++) {
+            //if task can fit between two events and/or last event
+            if(newschedule[j].hasOwn('eventdate')) {
+                prev = new Date(newschedule[j].eventdate).getTime() + parseInt(newschedule[j].eventtime);
+            }
+            else {
+                prev = new Date(newschedule[j].taskdate).getTime() + parseInt(newschedule[j].taskdeadline);
+            }
+            if(j != events.length - 1) {
+                if(newschedule[j+1].hasOwn('eventdate')) {
+                    next = new Date(newschedule[j+1].eventdate).getTime();
+                }
+                else {
+                    next = new Date(newschedule[j+1].taskdate).getTime();
+                }
+                if(prev + parseInt(tasks[i].time) < next) {
+                    
+                }
+            }
+        }
     }
 }
 
@@ -372,7 +414,6 @@ function sortEvents() {
 }
 
 
-
 function updateSchedule() {
     const scheduleContainer = document.getElementById("schedule");
     
@@ -384,10 +425,13 @@ function updateSchedule() {
         eventCard.classList.add("event-card");
         
         const eventName = document.createElement("h1");
+        eventName.classList.add("event-name");
         eventName.textContent = event.eventname;
         
         const eventDate = document.createElement("p");
-        eventDate.textContent = event.eventdate;
+        eventDate.classList.add("event-date");
+        const fdate = new Date(event.eventdate);
+        eventDate.textContent = fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         
         eventCard.appendChild(eventName);
         //eventCard.appendChild(eventDate);
@@ -465,9 +509,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.log("End Date:", dtend);
                         console.log("Summary:", summary);*/
                         // Check if event is for today or later
+                        //function addEvent(name, time, year, month, day, hours, minutes) {
                         if (dtstart.getDate() >= today.getDate()) {
-                            addEvent(summary, 
-                                    dtstart.getTime(), 
+                            addEvent(summary,  
                                     differenceInMinutes, 
                                     dtstart.getFullYear(), 
                                     dtstart.getMonth(), 
