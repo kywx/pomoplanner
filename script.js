@@ -1,23 +1,36 @@
 import ICAL from "./node_modules/ical.js/dist/ical.js";
 
-document.addEventListener('DOMContentLoaded', function() { // Checklist pause, double click
+
+// Hold and cross out checklist
+document.addEventListener('DOMContentLoaded', function() {
     const checklist = document.getElementById('checklist');
+    let longPressTimer;
   
-    checklist.addEventListener('click', function(event) {
+    checklist.addEventListener('mousedown', function(event) {
       if (event.target.type === 'checkbox') {
-        event.preventDefault(); // Prevent the default click behavior
+        longPressTimer = setTimeout(function() {
+          event.target.checked = !event.target.checked;
+          event.target.dispatchEvent(new Event('change', { bubbles: true }));
+        }, 500); // Adjust the time in milliseconds (e.g., 500ms for half a second)
       }
     });
   
-    checklist.addEventListener('dblclick', function(event) {
+    checklist.addEventListener('mouseup', function(event) {
+      clearTimeout(longPressTimer);
+    });
+  
+    checklist.addEventListener('mouseleave', function(event) {
+      clearTimeout(longPressTimer);
+    });
+  
+    // Prevent default checkbox click behavior
+    checklist.addEventListener('click', function(event) {
       if (event.target.type === 'checkbox') {
-        event.target.checked = !event.target.checked;
-        // Trigger the animations manually
-        event.target.dispatchEvent(new Event('change', { bubbles: true }));
+        event.preventDefault();
       }
     });
   });
-
+  
 
   document.addEventListener('DOMContentLoaded', function() { // Links List Listener
     const animatedButton = document.querySelector('.animated-button');
@@ -206,6 +219,45 @@ window.onload = function () {
 };
 
 
+
+// draggable elements
+dragElement(document.getElementById("mySafeTimer"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  elmnt.onmousedown = dragMouseDown;
+  
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
 
 
 
@@ -444,15 +496,18 @@ function updateMonthlySchedule () {
     console.log("loaded monthly schedule")
 
     events.forEach(event => {
+        console.log(typeof event.eventname);
+        console.log(event.eventname);
         const eventName = event.eventname;
         const fdate = new Date(event.eventdate);
-        const day = fdate.getDay();
+        const day = fdate.getDate();
         const duration = event.eventtime / 60;
         const endDate = new Date(fdate.getTime() + duration * 60000 * 60);
         const cell = document.getElementById(`day-${day}`);
         if (cell) {
-            cell.innerHTML += `<br><span class="additional-text">${eventName 
-            + ": " + fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + "-" + endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
+            cell.innerHTML += `<br><span class="additional-text">
+            ${eventName + '\n' + fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+            + "-" + endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span></br>`;
         }
     })
 }
@@ -464,26 +519,29 @@ function updateDailySchedule() {
     const schedule = loadSchedule();
     const events = schedule.events;
 
+    const today = new Date();
     events.forEach(event => {
-        const eventCard = document.createElement("div");
-        eventCard.classList.add("event-card");
-        
-        const eventName = document.createElement("h1");
-        eventName.classList.add("event-name");
-        eventName.textContent = event.eventname;
-        
-        const eventDate = document.createElement("p");
-        eventDate.classList.add("event-date");
         const fdate = new Date(event.eventdate);
-        const duration = event.eventtime / 60;
-        const newDate = new Date(fdate.getTime() + duration * 60000 * 60);
-        eventDate.textContent = fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + "-" + newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        eventCard.style.height = duration * 60 + "px"
+        if (fdate.getDate() == today.getDate()) {
+            const eventCard = document.createElement("div");
+            eventCard.classList.add("event-card");
+            
+            const eventName = document.createElement("h1");
+            eventName.classList.add("event-name");
+            eventName.textContent = event.eventname;
+            
+            const eventDate = document.createElement("p");
+            eventDate.classList.add("event-date");
+            const duration = event.eventtime / 60;
+            const newDate = new Date(fdate.getTime() + duration * 60000 * 60);
+            eventDate.textContent = fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + "-" + newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            eventCard.style.height = duration * 60 + "px"
 
-        eventCard.appendChild(eventName);
-        eventCard.appendChild(eventDate);
+            eventCard.appendChild(eventName);
+            eventCard.appendChild(eventDate);
 
-        scheduleContainer.appendChild(eventCard);
+            scheduleContainer.appendChild(eventCard);
+        }
     });
 }
 
@@ -556,19 +614,20 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.log("Summary:", summary);*/
                         // Check if event is for today or later
                         //function addEvent(name, time, year, month, day, hours, minutes) {
-                        if (dtstart.getDate() == today.getDate()) {
-                            addEvent(summary,  
+                    
+                        addEvent(summary,  
                                     differenceInMinutes, 
                                     dtstart.getFullYear(), 
                                     dtstart.getMonth(), 
                                     dtstart.getDate(), 
                                     dtstart.getHours(), 
                                     dtstart.getMinutes());
-                        }
+                        
                     }
                 }
                 printSchedule();
                 updateDailySchedule();
+                updateMonthlySchedule();
                 alert("Parsing successful! Check console for details.");
             } catch (error) {
             console.error("Parsing error:", error);
