@@ -79,56 +79,47 @@
               <td></td>
               <td></td>
               <td></td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
+              <td id="day-1">1</td>
+              <td id="day-2">2</td>
+              <td id="day-3">3</td>
+              <td id="day-4">4</td>
           </tr>
           <tr></tr>
           <tr>
-              <td>5</td>
-              <td>6</td>
-              <td>7</td>
-              <td>8</td>
-              <td>9</td>
-              <td>10</td>
-              <td>11</td>
+            <td id="day-5">5</td>
+            <td id="day-6">6</td>
+            <td id="day-7">7</td>
+            <td id="day-8">8</td>
+            <td id="day-9">9</td>
+            <td id="day-10">10</td>
+            <td id="day-11">11</td>
           </tr>
           <tr>
-              <td>12</td>
-              <td>13</td>
-              <td>14</td>
-              <td>15</td>
-              <td>16</td>
-              <td>17</td>
-              <td>18</td>
+            <td id="day-12">12</td>
+            <td id="day-13">13</td>
+            <td id="day-14">14</td>
+            <td id="day-15">15</td>
+            <td id="day-16">16</td>
+            <td id="day-17">17</td>
+            <td id="day-18">18</td>
           </tr>
           <tr>
-              <td id="day-19">19</td>
-              <td id="day-20">20</td>
-              <td id="day-21">21</td>
-              <td id="day-22">22</td>
-              <td id="day-23">23</td>
-              <td id="day-24">24</td>
-              <td id="day-25">25</td>
+            <td id="day-19">19</td>
+            <td id="day-20">20</td>
+            <td id="day-21">21</td>
+            <td id="day-22">22</td>
+            <td id="day-23">23</td>
+            <td id="day-24">24</td>
+            <td id="day-25">25</td>
           </tr>
           <tr>
-              <td id="day-26">26</td>
-              <td>27</td>
-              <td>28</td>
-              <td>29</td>
-              <td>30</td>
-              <td>31</td>
-              <td>1</td>
-          </tr>
-          <tr>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>6</td>
-              <td>7</td>
-              <td>8</td>
+            <td id="day-26">26</td>
+            <td id="day-27">27</td>
+            <td id="day-28">28</td>
+            <td id="day-29">29</td>
+            <td id="day-30">30</td>
+            <td id="day-31">31</td>
+            <td>1</td>
           </tr>
       </tbody>
   </table>
@@ -146,8 +137,8 @@
           <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="pause"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path></svg></label>
         
   </div>
-  <div id="bear">
-    <img src="./bear.png" height=100px width=100px>
+  <div>
+    <img id="bear" src="./workbear.png" height=120px width=120px>
   </div>
 </div>
 
@@ -169,20 +160,22 @@
       </div>
   </section>
 
-  <div class="wrapper">
-    <div class="circle-1"></div>
-    <div class="circle-2"></div>
+
+  <div class="wrapper" id="m_wrapper">
     <div class="card">
       
 
       <button class="animated-button">+</button>
 
       
-      <section class="top">
-        <strong class="u-l"> Workspace</strong>
+      <section class="top" id="m_wrapper">
+        <strong class="u-l"  id="m_wrapper"> Workspace</strong>
       </section>
       
       <section class="bottom">
+        <div>
+          <img id="bun" src="./bunny.png" height=120px width=120px>
+        </div>
         <ul class="users" id="taskList">
           <li class="user">
             <span contenteditable="true" class="task-link">ICS 46 - Project 4</span>
@@ -209,7 +202,6 @@
     </div>
     </div>
   </div>
-
     <p></p>
     <!--<script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -102,6 +102,7 @@ let breaks = 0;
 let on_break = 0;
 const m_startButton = document.querySelector('#startButton');
 const m_pauseButton = document.querySelector('#pau');
+const m_bear = document.querySelector('#bear');
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -122,13 +123,15 @@ function startTimer(duration, display) {
                 // go back to Pomodoro
                 clearInterval(intID);
                 window.alert("Break is over :(");
+                m_bear.src = "/workbear.png";
                 on_break = 0;
                 m_startButton.textContent = "Start Timer";
                 m_pauseButton.checked = false;
             } else {
+                m_bear.src = "/sleepbear.png";
                 on_break = 1;
                 breaks += 1;
-                savedtime = 300;   // 5 minutes
+                savedtime = 2;   // 5 minutes
                 if (breaks > 4) {
                     breaks = 0;
                     savedtime = 1200;  // 20 minutes
@@ -167,14 +170,14 @@ function resumeTimer(intervalID, display) {
 
 
 window.onload = function () {
-    var time = 1500; // Your time in seconds here 1500 (25 minutes)
+    var time = 3; // Your time in seconds here 1500 (25 minutes)
     var display = document.querySelector('#safeTimerDisplay');
     var startButton = document.querySelector('#startButton');
     var pauseButton = document.querySelector('#pau');
+    
     savedtime = time;
 
     m_startButton.addEventListener('click', function () {
-        
         if (m_startButton.textContent == "Start Timer") {
             intID = startTimer(time, display);
             m_startButton.textContent = "Restart Timer";
@@ -222,6 +225,8 @@ window.onload = function () {
 
 // draggable elements
 dragElement(document.getElementById("mySafeTimer"));
+dragElement(document.getElementById("m_wrapper"));
+dragElement(document.getElementById("checklist"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -231,6 +236,7 @@ function dragElement(elmnt) {
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
+    
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
@@ -496,18 +502,21 @@ function updateMonthlySchedule () {
     console.log("loaded monthly schedule")
 
     events.forEach(event => {
-        console.log(typeof event.eventname);
-        console.log(event.eventname);
         const eventName = event.eventname;
         const fdate = new Date(event.eventdate);
-        const day = fdate.getDate();
-        const duration = event.eventtime / 60;
-        const endDate = new Date(fdate.getTime() + duration * 60000 * 60);
-        const cell = document.getElementById(`day-${day}`);
-        if (cell) {
-            cell.innerHTML += `<br><span class="additional-text">
-            ${eventName + '\n' + fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-            + "-" + endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span></br>`;
+        const today = new Date();
+        if (fdate.getMonth() == today.getMonth()) {
+            const day = fdate.getDate();
+            const duration = event.eventtime / 60;
+            const endDate = new Date(fdate.getTime() + duration * 60000 * 60);
+            const cell = document.getElementById(`day-${day}`);
+            if (cell) {
+                cell.innerHTML += `<br><span class="additional-text">
+                ${eventName + ": " +
+                fdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+                + "-" + 
+                endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
+            }
         }
     })
 }

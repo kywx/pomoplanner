@@ -11,11 +11,12 @@ body {
 
 
 #mySafeTimer {
+  z-index: 10000;
   position: absolute;
 }
 
 #safeTimer {
-  -webkit-user-drag: element;
+
   cursor: move;
   bottom: 10px;
   right: 10px;
@@ -37,8 +38,8 @@ body {
 
 #bear {
   position: absolute;
-  bottom: 50px;
-  right: 0px;
+  bottom: 155px;
+  right: -20px;
   z-index: 999;
 }
 
@@ -60,10 +61,10 @@ body {
 }
 
 #safeTimer:hover {
-box-shadow: 0 0 5px rgb(230, 195, 231),
-            0 0 25px rgb(230, 195, 231),
-            0 0 50px rgb(230, 195, 231),
-            0 0 100px rgb(230, 195, 231);
+box-shadow: 0 0 5px rgb(210, 142, 169),
+            0 0 25px rgb(205, 152, 187),
+            0 0 50px rgb(231, 195, 214),
+            0 0 100px rgb(228, 181, 196);
 }
 
 #safeTimerDisplay {
@@ -125,6 +126,8 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   border-radius: 1em;
   z-index: 50;
   flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /*.event-card:hover {
@@ -170,6 +173,7 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 
 #monthStyle {
   margin-top: 70px;
+  font-size: 40px;
   color: rgb(219, 134, 153);
   text-align: center;
 }
@@ -177,15 +181,16 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 #calTable {
   border: 1px solid white;
   width: 800px;
-  height: 600px;
+  margin-top: auto;
+  width: 100%;
+  height: 80%;
   table-layout: fixed;
   background-color: rgb(235, 206, 213);
 }
 
 #calTable td, #calTable th {
   word-wrap: break-word;
-  padding: 1px; /* Adjust padding as necessary */
-  vertical-align: top; /* Align content to the top */
+  vertical-align: top;
 }
 
 .btn {
@@ -212,15 +217,46 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 
 
 /* Docker for links */
+.m_wrapper {
+  z-index: 10000;
+  position: absolute;
+}
+
 .wrapper {
   max-width: 400px;
+  cursor: move;
   height: 400px;
-  position: relative;
+  min-width: 400px;
+  border-radius: .75rem;
+  background-color: var(--white); /* Example background color */
   --white: #e3e3e3;
-  --bc: rgb(203,46,79);
-  --bc-al: rgba(203,46,79,0.6);
-  
+  --bc: rgb(203, 46, 79);
+  --bc-al: rgba(203, 46, 79, 0.6);
+  z-index: 9999;
+  box-shadow: 0 0 25px rgb(248, 199, 222); /* Initial shadow setup */
+  transition: box-shadow 0.5s ease; /* Transition for box-shadow */
+  position: absolute; /*Ensure relative position for pseudo-element */
 }
+
+.wrapper:hover {
+  box-shadow: 0 0 5px rgb(210, 142, 169),
+            0 0 25px rgb(183, 114, 160),
+            0 0 50px rgb(231, 195, 214),
+            0 0 100px rgb(228, 181, 196);
+}
+
+.wrapper::before {
+  content: "";
+  position: absolute;
+  top: -10px; /* Adjust the top position to extend the shadow effect */
+  left: -10px; /* Adjust the left position to extend the shadow effect */
+  right: -10px; /* Adjust the right position to extend the shadow effect */
+  bottom: -10px; /* Adjust the bottom position to extend the shadow effect */
+  z-index: -1;
+  box-shadow: inset 0 0 5px rgba(255, 246, 246, 0); /* Inner shadow to wrap edges */
+  border-radius: 10px; /* Ensure this matches your .wrapper's border-radius */
+}
+
 
 .card {
   max-width: 400px;
@@ -245,41 +281,19 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 }
 
 
-/*
-.circle-1 {
-  position: absolute;
-  content: '';
-  width: 5rem;
-  height: 5rem;
-  left: 1rem;
-  top: 50%;
-  transform: translate(-50%);
-  background-color: var(--bc-al);
-  border-radius: 50%;
-  z-index: -10;
-}
-
-
-.circle-2 {
-  position: absolute;
-  content: '';
-  width: 3rem;
-  height: 3rem;
-  right: -1rem;
-  top: 3rem;
-  background-color: var(--bc-al);
-  border-radius: 50%;
-  z-index: -10;
-}
-*/
-
 .top {
   padding: .5rem 4rem;
   z-index: 1;
 }
 
 .bottom {
-  z-index: 2;
+  z-index: 1000;
+}
+
+#bun {
+  position: absolute;
+  bottom: 0px;
+  right: -5px;
 }
 
 .users {
@@ -325,12 +339,14 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
 .task-link {
   font-weight: 700;
   font-size: large;
+  z-index: 7000;
 }
 
 .task {
   opacity: .8;
   font-style: italic;
   font-size: medium;
+  z-index: 7000;
 }
 
 .u-l {
@@ -359,7 +375,7 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   width: var(--width);
   height: var(--height);
   border-radius: var(--border-radius);
-  position: relative;
+  position: absolute;
   box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
   padding: 30px 85px;
   display: grid;
@@ -367,7 +383,18 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   align-items: center;
   justify-content: center;
   overflow-y: auto;
+  z-index: 9998;
+  cursor: move;
+  transition: box-shadow 0.3s ease; /* Transition for smooth hover effect */
 }
+
+#checklist:hover {
+  box-shadow: 0 0 5px rgb(215, 165, 185),
+            0 0 25px rgb(222, 182, 208),
+            0 0 50px rgb(231, 195, 214),
+            0 0 100px rgb(228, 181, 196);
+}
+
 
 #checklist label {
   color: var(--text);
@@ -379,6 +406,7 @@ box-shadow: 0 0 5px rgb(230, 195, 231),
   height: 50px;
   transition: color 0.3s ease;
   margin-right: 20px;
+  z-index: 7000;
 }
 
 #checklist label::before, #checklist label::after {
